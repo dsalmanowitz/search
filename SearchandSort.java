@@ -11,6 +11,10 @@ public class SearchAndSort {
 	
 	public static void main(String[] args) {
 		Scanner in = new Scanner(System.in);
+		
+		String[] list;
+		ArrayList<String> list1;
+		
 		System.out.println("What algorithm would you like to execute?");
 		String merge = in.nextLine().toLowerCase();
 		boolean error = false;
@@ -35,7 +39,9 @@ public class SearchAndSort {
 		}
 		System.out.println("Enter the data");
 		String data = in.nextLine();
-		if (type.equals("integers") && storage.equals("list")) {
+		if (storage.equals("array")) {
+			list = data.split(",", 0);
+		} else {
 			
 		}
 	}
