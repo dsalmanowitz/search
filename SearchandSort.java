@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class SearchAndSort {
@@ -10,9 +11,11 @@ public class SearchAndSort {
 	 */
 	
 	public static void main(String[] args) {
+		SearchAndSort search = new SearchAndSort();
 		Scanner in = new Scanner(System.in);
 		
-		String[] list;
+		String[] list = null;
+		int[] numlist = null;
 		ArrayList<String> list1 = new ArrayList<String>();
 		
 		System.out.println("What algorithm would you like to execute?");
@@ -40,9 +43,6 @@ public class SearchAndSort {
 		String data = in.nextLine();
 		if (storage.equals("array") || storage.equals("list")) {
 			list = data.split(",", 0);
-			for (int n = 0; n < list.length; n++) {
-				System.out.print(list[n] + " ");
-			}
 			for (String val : list) {
 				if(type.equals("integers")) {
 					for (int j = 0; j < val.length(); j++) {
@@ -60,8 +60,106 @@ public class SearchAndSort {
 				}
 			}
 		}
-		if (merge.equals("bubble") && storage.equals("array")) {
-			bubble(list);
+		if (type.equals("integers")) {
+			if (storage.equals("array")) {
+				numlist = new int[list.length];
+				for (int i = 0; i < list.length; i++) {
+					numlist[i] = Integer.valueOf(list[i]);
+				}
+				switch (merge) {
+				case "bubble": 
+					search.bubble(numlist);
+					break;
+				case "selection":
+					search.selection(numlist);
+					break;
+				case "insertion":
+					search.insertion(numlist);
+					break;
+				case "merge" :
+					search.merge(numlist);
+					break;
+				case "linear" : 
+					search.linear(numlist);
+					break;
+				case "binary" :
+					search.binary(numlist);
+					break;
+				}
+				
+			} else {
+				Integer[] numlist2 = new Integer[list.length];
+				for (int i = 0; i < list.length; i++) {
+					numlist2[i] = Integer.valueOf(list[i]);
+				}
+				ArrayList<Integer> numlist1 = new ArrayList<Integer>();
+				numlist1 = (ArrayList<Integer>) Arrays.asList(numlist2);
+				switch (merge) {
+				case "bubble": 
+					search.bubble(numlist1);
+					break;
+				case "selection":
+					search.selection(numlist1);
+					break;
+				case "insertion":
+					search.insertion(numlist1);
+					break;
+				case "merge" :
+					search.merge(numlist1);
+					break;
+				case "linear" : 
+					search.linear(numlist1);
+					break;
+				case "binary" :
+					search.binary(numlist1);
+					break;
+				}
+			}
+		} else {
+			if (storage.equals("array")) {
+				switch (merge) {
+				case "bubble": 
+					search.bubble(list);
+					break;
+				case "selection":
+					search.selection(list);
+					break;
+				case "insertion":
+					search.insertion(list);
+					break;
+				case "merge" :
+					search.merge(list);
+					break;
+				case "linear" : 
+					search.linear(list);
+					break;
+				case "binary" :
+					search.binary(list);
+					break;
+				}
+			} else {
+				ArrayList<String> list2 = new ArrayList<String>((ArrayList<String>) Arrays.asList(list));
+				switch (merge) {
+				case "bubble": 
+					search.bubbles(list2);
+					break;
+				case "selection":
+					search.selections(list2);
+					break;
+				case "insertion":
+					search.insertions(list2);
+					break;
+				case "merge" :
+					search.merges(list2);
+					break;
+				case "linear" : 
+					search.linears(list2);
+					break;
+				case "binary" :
+					search.binarys(list2);
+					break;
+				}
+			}
 		}
 	}
 	
@@ -99,6 +197,7 @@ public class SearchAndSort {
 				}
 			}
 		}
+		
 		return list;
 	}
 	
@@ -132,6 +231,73 @@ public class SearchAndSort {
 					sorted = false;
 				}
 			}
+		}
+		return list;
+	}
+	
+	public int[] selection(int[] list) {
+		for (int i = 0; i < list.length; i++) {
+			int min = i;
+			for (int j = i+1; j < list.length-1; j++) {
+				if (list[j] < list[min]) {
+					min = j;
+				}
+			}
+			int temp = list[min];
+			list[min] = list[i];
+			list[i] = temp;
+		}
+		return list;
+	}
+	
+	public String[] selection(String[] list) {
+		for (int i = 0; i < list.length; i++) {
+			int min = i;
+			for (int j = i+1; j < list.length-1; j++) {
+				if (list[j].compareTo(list[min]) < 0) {
+					min = j;
+				}
+			}
+			String temp = list[min];
+			list[min] = list[i];
+			list[i] = temp;
+		}
+		return list;
+	}
+	
+	public ArrayList<Integer> selection(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int min = i;
+			for (int j = i+1; j < list.size()-1; j++) {
+				if (list.get(j) < list.get(min)) {
+					min = j;
+				}
+			}
+			Integer temp = list.get(min);
+			list.set(min, list.get(i));
+			list.set(i, temp);
+		}
+		return list;
+	}
+	
+	public ArrayList<String> selections(ArrayList<String> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int min = i;
+			for (int j = i+1; j < list.size()-1; j++) {
+				if (list.get(j).compareTo(list.get(min)) < 0) {
+					min = j;
+				}
+			}
+			String temp = list.get(min);
+			list.set(min, list.get(i));
+			list.set(i, temp);
+		}
+		return list;
+	}
+	
+	public int[] insertion(int[] list) {
+		for (int i = 0; i < list.length; i++) {
+			for ()
 		}
 		return list;
 	}
