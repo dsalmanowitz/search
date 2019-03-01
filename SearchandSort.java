@@ -19,11 +19,11 @@ public class SearchAndSort {
 		ArrayList<String> list1 = new ArrayList<String>();
 		
 		System.out.println("What algorithm would you like to execute?");
-		String merge = in.nextLine().toLowerCase();
-		if (!merge.equals("bubble") && !merge.equals("selection") && !merge.equals("insertion") && !merge.equals("merge") && !merge.equals("linear") && !merge.equals("binary") && !merge.equals("quit")) {
+		String operation = in.nextLine().toLowerCase();
+		if (!operation.equals("bubble") && !operation.equals("selection") && !operation.equals("insertion") && !operation.equals("merge") && !operation.equals("linear") && !operation.equals("binary") && !operation.equals("quit")) {
 			System.out.println("Invalid input. Acceptable responses: bubble, selection, insertion, merge, linear, binary, quit.");
 			return;
-		} else if (merge.equals("quit")) {
+		} else if (operation.equals("quit")) {
 			return;
 		}
 		
@@ -66,7 +66,7 @@ public class SearchAndSort {
 				for (int i = 0; i < list.length; i++) {
 					numlist[i] = Integer.valueOf(list[i]);
 				}
-				switch (merge) {
+				switch (operation) {
 				case "bubble": 
 					search.bubble(numlist);
 					break;
@@ -80,10 +80,10 @@ public class SearchAndSort {
 					search.merge(numlist);
 					break;
 				case "linear" : 
-					search.linear(numlist);
+					search.linear(numlist, target);
 					break;
 				case "binary" :
-					search.binary(numlist);
+					search.binary(numlist, target);
 					break;
 				}
 				
@@ -94,7 +94,7 @@ public class SearchAndSort {
 				}
 				ArrayList<Integer> numlist1 = new ArrayList<Integer>();
 				numlist1 = (ArrayList<Integer>) Arrays.asList(numlist2);
-				switch (merge) {
+				switch (operation) {
 				case "bubble": 
 					search.bubble(numlist1);
 					break;
@@ -108,16 +108,16 @@ public class SearchAndSort {
 					search.merge(numlist1);
 					break;
 				case "linear" : 
-					search.linear(numlist1);
+					search.linear(numlist1, target);
 					break;
 				case "binary" :
-					search.binary(numlist1);
+					search.binary(numlist1, target);
 					break;
 				}
 			}
 		} else {
 			if (storage.equals("array")) {
-				switch (merge) {
+				switch (operation) {
 				case "bubble": 
 					search.bubble(list);
 					break;
@@ -131,15 +131,15 @@ public class SearchAndSort {
 					search.merge(list);
 					break;
 				case "linear" : 
-					search.linear(list);
+					search.linear(list, target);
 					break;
 				case "binary" :
-					search.binary(list);
+					search.binary(list, target);
 					break;
 				}
 			} else {
 				ArrayList<String> list2 = new ArrayList<String>((ArrayList<String>) Arrays.asList(list));
-				switch (merge) {
+				switch (operation) {
 				case "bubble": 
 					search.bubbles(list2);
 					break;
@@ -153,10 +153,10 @@ public class SearchAndSort {
 					search.merges(list2);
 					break;
 				case "linear" : 
-					search.linears(list2);
+					search.linears(list2, target);
 					break;
 				case "binary" :
-					search.binarys(list2);
+					search.binarys(list2, target);
 					break;
 				}
 			}
@@ -297,9 +297,70 @@ public class SearchAndSort {
 	
 	public int[] insertion(int[] list) {
 		for (int i = 0; i < list.length; i++) {
-			for ()
+			int j = i-1;
+			int val = list[i];
+			while (j >= 0 && list[j] > val) {
+				list[j+1] = list[j];
+				j--;
+			}
+			list[j+1] = val;
 		}
 		return list;
 	}
 	
+	public String[] insertion(String[] list) {
+		for (int i = 0; i < list.length; i++) {
+			int j = i-1;
+			String val = list[i];
+			while (j >= 0 && list[j].compareTo(val) > 0) {
+				list[j+1] = list[j];
+				j--;
+			}
+			list[j+1] = val;
+		}
+		return list;
+	}
+	
+	public ArrayList<Integer> insertion(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int j = i-1;
+			int val = list.get(i);
+			while (j >= 0 && list.get(j) > val) {
+				list.set(j+1, list.get(j));
+				j--;
+			}
+			list.set(j+1, val);
+		}
+		return list;
+	}
+	
+	public ArrayList<String> insertions(ArrayList<String> list) {
+		for (int i = 0; i < list.size(); i++) {
+			int j = i-1;
+			String val = list.get(i);
+			while (j >= 0 && list.get(j).compareTo(val) > 0) {
+				list.set(j+1, list.get(j));
+				j--;
+			}
+			list.set(j+1, val);
+		}
+		return list;
+	}
+	
+	public int[] merge(int[] list) {
+		
+	}
+	
+	public String[] merge(String[] list) {
+		
+	}
+	
+	public ArrayList<Integer> merge(ArrayList<Integer> list) {
+		
+	}
+	
+	public ArrayList<String> merges(ArrayList<String> list) {
+		
+	}
+ 	
 }
