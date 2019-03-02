@@ -61,6 +61,20 @@ public class SearchAndSort {
 			}
 		}
 		if (type.equals("integers")) {
+			String t = null;
+			if (operation.equals("linear") || (operation.equals("binary"))) {
+				System.out.println("What is the target?");
+				t = in.nextLine();
+				if (t.equals("")) {
+					System.out.println("Invalid target.");
+				}
+				for (int i = 0; i < t.length(); i++) {
+					if (!Character.isDigit(t.charAt(i))) {
+						System.out.println("Invalid target.");
+						return;
+					}
+				}
+			}
 			if (storage.equals("array")) {
 				numlist = new int[list.length];
 				for (int i = 0; i < list.length; i++) {
@@ -80,10 +94,10 @@ public class SearchAndSort {
 					search.merge(numlist);
 					break;
 				case "linear" : 
-					search.linear(numlist, target);
+					search.linear(numlist, Integer.valueOf(t));
 					break;
 				case "binary" :
-					search.binary(numlist, target);
+					search.binary(numlist, Integer.valueOf(t));
 					break;
 				}
 				
@@ -108,14 +122,22 @@ public class SearchAndSort {
 					search.merge(numlist1);
 					break;
 				case "linear" : 
-					search.linear(numlist1, target);
+					search.linear(numlist1, Integer.valueOf(t));
 					break;
 				case "binary" :
-					search.binary(numlist1, target);
+					search.binary(numlist1, Integer.valueOf(t));
 					break;
 				}
 			}
 		} else {
+			String target = null;
+			if (operation.equals("linear") || (operation.equals("binary"))) {
+				System.out.println("What is the target?");
+				target = in.nextLine();
+				if (target.equals("") || target.equals(null)) {
+					System.out.println("Invalid target.");
+				}
+			}
 			if (storage.equals("array")) {
 				switch (operation) {
 				case "bubble": 
@@ -176,9 +198,6 @@ public class SearchAndSort {
 					sorted = false;
 				}
 			}
-		}
-		for (int n = 0; n < list.length; n++) {
-			System.out.print(list[n] + " ");
 		}
 		return list;
 	}
@@ -348,19 +367,146 @@ public class SearchAndSort {
 	}
 	
 	public int[] merge(int[] list) {
-		
+		return list;
 	}
 	
 	public String[] merge(String[] list) {
-		
+		return list;
+
 	}
 	
 	public ArrayList<Integer> merge(ArrayList<Integer> list) {
-		
+		return list;
 	}
 	
 	public ArrayList<String> merges(ArrayList<String> list) {
-		
+		return list;
+
+	}
+	
+	public int linear(int[] list, int target) {
+		for (int i = 0; i < list.length; i++) {
+			if (list[i] == target) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int linear(String[] list, String target) {
+		for (int i = 0; i < list.length; i++) {
+			if (list[i].equals(target)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int linear(ArrayList<Integer> list, int target) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i) == target) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	public int linears(ArrayList<String> list, String target) {
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).equals(target)) {
+				return i;
+			}
+		}
+		return -1;
 	}
  	
+	public int binary(int[] list, int target) {
+		bubble(list);
+		if (list == null || list.length == 0) {
+			return -1;
+		}
+		int left = 0;
+		int right = list.length-1;
+		int mid = list.length/2;
+		while (left <= right) {
+			if (list[mid] == target) {
+				System.out.println(mid);
+				return mid;
+			} else if (list[mid] > target) {
+				right = mid - 1;
+				mid = (left + right) / 2;
+			} else {
+				left = mid + 1;
+				mid = (left + right) / 2;
+			}
+		}
+		return -1;
+	}
+	
+	public int binary(String[] list, String target) {
+		bubble(list);
+		if (list == null || list.length == 0) {
+			return -1;
+		}
+		int left = 0;
+		int right = list.length-1;
+		int mid = list.length/2;
+		while (left <= right) {
+			if (list[mid].equals(target)) {
+				return mid;
+			} else if (list[mid].compareTo(target) > 0) {
+				right = mid - 1;
+				mid = (left + right) / 2;
+			} else {
+				left = mid + 1;
+				mid = (left + right) / 2;
+			}
+		}
+		return -1;
+	}
+	
+	public int binary(ArrayList<Integer> list, int target) {
+		bubble(list);
+		if (list == null || list.size() == 0) {
+			return -1;
+		}
+		int left = 0;
+		int right = list.size()-1;
+		int mid = list.size()/2;
+		while (left <= right) {
+			if (list.get(mid) == target) {
+				return mid;
+			} else if (list.get(mid) > target) {
+				right = mid - 1;
+				mid = (left + right) / 2;
+			} else {
+				left = mid + 1;
+				mid = (left + right) / 2;
+			}
+		}
+		return -1;
+	}
+	
+	public int binarys(ArrayList<String> list, String target) {
+		bubbles(list);
+		if (list == null || list.isEmpty()) {
+			return -1;
+		}
+		int left = 0;
+		int right = list.size()-1;
+		int mid = list.size()/2;
+		while (left <= right) {
+			if (list.get(mid).equals(target)) {
+				return mid;
+			} else if (list.get(mid).compareTo(target) > 0) {
+				right = mid - 1;
+				mid = (left + right) / 2;
+			} else {
+				left = mid + 1;
+				mid = (left + right) / 2;
+			}
+		}
+		return -1;
+	}
+	
 }
