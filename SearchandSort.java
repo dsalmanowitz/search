@@ -39,14 +39,25 @@ public class SearchAndSort {
 			System.out.println("Invalid input. Acceptable responses: array, list.");
 			return;
 		}
-		System.out.println("Enter the data.");
+		System.out.println("Enter the data in a comma-delimited list.");
 		String data = in.nextLine();
+		if (data.equals("")) {
+			System.out.println("No data inputted.");
+			return;
+		}
 		if (storage.equals("array") || storage.equals("list")) {
 			list = data.split(",", 0);
 			for (String val : list) {
 				if(type.equals("integers")) {
 					for (int j = 0; j < val.length(); j++) {
-						if (!Character.isDigit(val.charAt(j))) {
+						
+						if (val.length() > 1 && val.charAt(0) == '-' && Character.isDigit(val.charAt(1))) {
+							System.out.print("");
+						} else if (!Character.isDigit(val.charAt(j))) {
+							if (Character.isWhitespace(val.charAt(j))) {
+								System.out.println("No spaces in list, please.");
+								return;
+							}
 							System.out.println("Invalid input.");
 							return;
 						}
@@ -82,22 +93,26 @@ public class SearchAndSort {
 				}
 				switch (operation) {
 				case "bubble": 
-					search.bubble(numlist);
+					System.out.print("Bubble sort: ");
+					search.print(search.bubble(numlist));
 					break;
 				case "selection":
-					search.selection(numlist);
+					System.out.print("Selection sort: ");
+					search.print(search.selection(numlist));
 					break;
 				case "insertion":
-					search.insertion(numlist);
+					System.out.print("Insertion sort: ");
+					search.print(search.insertion(numlist));
 					break;
 				case "merge" :
-					search.merge(numlist);
+					System.out.print("Merge sort: ");
+					search.print(search.merge(numlist, numlist.length));
 					break;
 				case "linear" : 
-					search.linear(numlist, Integer.valueOf(t));
+					System.out.println("Index: " + search.linear(numlist, Integer.valueOf(t)));
 					break;
 				case "binary" :
-					search.binary(numlist, Integer.valueOf(t));
+					System.out.println("Index: " + search.binary(numlist, Integer.valueOf(t)));
 					break;
 				}
 				
@@ -107,25 +122,31 @@ public class SearchAndSort {
 					numlist2[i] = Integer.valueOf(list[i]);
 				}
 				ArrayList<Integer> numlist1 = new ArrayList<Integer>();
-				numlist1 = (ArrayList<Integer>) Arrays.asList(numlist2);
+				for (int i = 0; i < numlist2.length; i++) {
+					numlist1.add(numlist2[i]);
+				}
 				switch (operation) {
 				case "bubble": 
-					search.bubble(numlist1);
+					System.out.print("Bubble sort: ");
+					search.print(search.bubble(numlist1));
 					break;
 				case "selection":
-					search.selection(numlist1);
+					System.out.print("Selection sort: ");
+					search.print(search.selection(numlist1));
 					break;
 				case "insertion":
-					search.insertion(numlist1);
+					System.out.print("Insertion sort: ");
+					search.print(search.insertion(numlist1));
 					break;
 				case "merge" :
-					search.merge(numlist1);
+					System.out.print("Merge sort: ");
+					search.print(search.merge(numlist1, numlist1.size()));
 					break;
 				case "linear" : 
-					search.linear(numlist1, Integer.valueOf(t));
+					System.out.println("Index: " + search.linear(numlist1, Integer.valueOf(t)));
 					break;
 				case "binary" :
-					search.binary(numlist1, Integer.valueOf(t));
+					System.out.println("Index: " + search.binary(numlist1, Integer.valueOf(t)));
 					break;
 				}
 			}
@@ -141,44 +162,52 @@ public class SearchAndSort {
 			if (storage.equals("array")) {
 				switch (operation) {
 				case "bubble": 
-					search.bubble(list);
+					System.out.print("Bubble sort: ");
+					search.print(search.bubble(list));
 					break;
 				case "selection":
-					search.selection(list);
+					System.out.print("Selection sort: ");
+					search.print(search.selection(list));
 					break;
 				case "insertion":
-					search.insertion(list);
+					System.out.print("Insertion sort: ");
+					search.print(search.insertion(list));
 					break;
 				case "merge" :
-					search.merge(list);
+					System.out.print("Merge sort: ");
+					search.print(search.merge(list, list.length));
 					break;
 				case "linear" : 
-					search.linear(list, target);
+					System.out.println("Index: " + search.linear(list, target));
 					break;
 				case "binary" :
-					search.binary(list, target);
+					System.out.println("Index: " + search.binary(list, target));
 					break;
 				}
 			} else {
-				ArrayList<String> list2 = new ArrayList<String>((ArrayList<String>) Arrays.asList(list));
+				ArrayList<String> list2 = new ArrayList<String>(Arrays.asList(list));
 				switch (operation) {
 				case "bubble": 
-					search.bubbles(list2);
+					System.out.print("Bubble sort: ");
+					search.prints(search.bubbles(list2));
 					break;
 				case "selection":
-					search.selections(list2);
+					System.out.print("Selection sort: ");
+					search.prints(search.selections(list2));
 					break;
 				case "insertion":
-					search.insertions(list2);
+					System.out.print("Insertion sort: ");
+					search.prints(search.insertions(list2));
 					break;
 				case "merge" :
-					search.merges(list2);
+					System.out.print("Merge sort: ");
+					search.prints(search.merges(list2, list2.size()));
 					break;
 				case "linear" : 
-					search.linears(list2, target);
+					System.out.println("Index: " + search.linears(list2, target));
 					break;
 				case "binary" :
-					search.binarys(list2, target);
+					System.out.println("Index: " + search.binarys(list2, target));
 					break;
 				}
 			}
@@ -365,23 +394,97 @@ public class SearchAndSort {
 		}
 		return list;
 	}
-	
-	public int[] merge(int[] list) {
-		return list;
-	}
-	
-	public String[] merge(String[] list) {
-		return list;
 
-	}
-	
-	public ArrayList<Integer> merge(ArrayList<Integer> list) {
+	public int[] merge(int[] list, int len) {
+		int[] left = new int[len/2];
+		int[] right = new int[len - len/2];
+		
+		for (int i = 0; i < len/2; i++) {
+			left[i] = list[i];
+		}
+		for (int i = len/2; i < len; i++) {
+			right[i - len/2] = list[i];
+		}
+		merge(left, left.length);
+		merge(right, right.length);
+		
+		bigmerge(list, left, right);
+		
 		return list;
 	}
 	
-	public ArrayList<String> merges(ArrayList<String> list) {
+	public int[] bigmerge(int[] list, int[] left, int[] right) {
+		int l = 0;
+		int r = 0;
+		int k = 0;
+		
+		while (l < left.length && r < right.length) {
+			if (left[l] > right[r]) {
+				list[k] = right[r];
+				k++;
+				r++;
+			} else {
+				list[k] = left[l];
+				k++;
+				l++;
+			}
+		}
+		
 		return list;
-
+	}
+	
+	public String[] merge(String[] list, int len) {
+		String[] left = new String[len/2];
+		String[] right = new String[len - len/2];
+		
+		for (int i = 0; i < len/2; i++) {
+			left[i] = list[i];
+		}
+		for (int i = len/2; i < len; i++) {
+			right[i - len/2] = list[i];
+		}
+		merge(left, left.length);
+		merge(right, right.length);
+		
+	//	bigmerge(list, left, right);
+		
+		return list;
+	}
+	
+	public ArrayList<Integer> merge(ArrayList<Integer> list, int len) {
+		ArrayList<Integer> left = new ArrayList<Integer>();
+		ArrayList<Integer> right = new ArrayList<Integer>();
+		
+		for (int i = 0; i < len/2; i++) {
+			left.add(list.get(i));
+		}
+		for (int i = len/2; i < len; i++) {
+			right.add(list.get(i));
+		}
+		merge(left, left.size());
+		merge(right, right.size());
+		
+	//	bigmerge(list, left, right);
+		
+		return list;
+	}
+	
+	public ArrayList<String> merges(ArrayList<String> list, int len) {
+		ArrayList<String> left = new ArrayList<String>();
+		ArrayList<String> right = new ArrayList<String>();
+		
+		for (int i = 0; i < len/2; i++) {
+			left.add(list.get(i));
+		}
+		for (int i = len/2; i < len; i++) {
+			right.add(list.get(i));
+		}
+		merges(left, left.size());
+		merges(right, right.size());
+		
+	//	bigmerges(list, left, right);
+		
+		return list;
 	}
 	
 	public int linear(int[] list, int target) {
@@ -430,7 +533,6 @@ public class SearchAndSort {
 		int mid = list.length/2;
 		while (left <= right) {
 			if (list[mid] == target) {
-				System.out.println(mid);
 				return mid;
 			} else if (list[mid] > target) {
 				right = mid - 1;
@@ -507,6 +609,46 @@ public class SearchAndSort {
 			}
 		}
 		return -1;
+	}
+	
+	public void print(int[] list) {
+		for (int i = 0; i < list.length; i++) {
+			if (i > 0) {
+				System.out.print(",");
+			}
+			System.out.print(list[i]);
+		}
+		System.out.println();
+	}
+	
+	public void print(String[] list) {
+		for (int i = 0; i < list.length; i++) {
+			if (i > 0) {
+				System.out.print(",");
+			}
+			System.out.print(list[i]);
+		}
+		System.out.println();
+	}
+	
+	public void print(ArrayList<Integer> list) {
+		for (int i = 0; i < list.size(); i++) {
+			if (i > 0) {
+				System.out.print(",");
+			}
+			System.out.print(list.get(i));
+		}
+		System.out.println();
+	}
+	
+	public void prints(ArrayList<String> list) {
+		for (int i = 0; i < list.size(); i++) {
+			if (i > 0) {
+				System.out.print(",");
+			}
+			System.out.print(list.get(i));
+		}
+		System.out.println();
 	}
 	
 }
