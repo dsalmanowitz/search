@@ -408,9 +408,7 @@ public class SearchAndSort {
 		merge(left, left.length);
 		merge(right, right.length);
 		
-		bigmerge(list, left, right);
-		
-		return list;
+		return merge(bigmerge(list, left, right), list.length);
 	}
 	
 	public int[] bigmerge(int[] list, int[] left, int[] right) {
